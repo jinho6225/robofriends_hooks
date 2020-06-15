@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CardList from './CardList';
-import SearchBox from './SearchBox';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
 import styled from 'styled-components';
+import Scroll from '../components/Scroll';
 
 const Title = styled.h1`
   font-size: 4em;
@@ -9,7 +10,8 @@ const Title = styled.h1`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  color: #ffffaa;
+  color: white;
+  text-shadow: 5px 5px 8px #000000;
   margin: 0.3 0;
 `;
 
@@ -35,17 +37,17 @@ const App = () => {
       .then((users) => setRobots(users));
   }, []);
 
-  if (robots.length === 0) {
-    return <Title>Loading...</Title>;
-  } else {
-    return (
-      <div className="tc">
-        <Title>RoboFriends</Title>
-        <SearchBox {...name} />
+  return !robots.length ? (
+    <Title>Loading...</Title>
+  ) : (
+    <div className="tc">
+      <Title>RoboFriends</Title>
+      <SearchBox {...name} />
+      <Scroll>
         <CardList robots={filteredRobots} />
-      </div>
-    );
-  }
+      </Scroll>
+    </div>
+  );
 };
 
 export default App;
